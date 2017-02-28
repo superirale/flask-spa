@@ -48,7 +48,7 @@ class ContactListResource(Resource):
     def get(self):
         "get all contact method"
         contacts = models.Contact.query.all()
-        return  [marshal(contact, contact_fields) for contact in contacts]
+        return [marshal(contact, contact_fields) for contact in contacts]
 
     def post(self):
         "create new contact"
@@ -57,7 +57,6 @@ class ContactListResource(Resource):
         db.session.add(contact)
         db.session.commit()
         return marshal(contact, contact_fields), 201
-
-        
+                
 api.add_resource(ContactListResource, '/contacts')
 api.add_resource(ContactResource, '/contacts/<int:contact_id>')
