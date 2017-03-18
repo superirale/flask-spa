@@ -2,9 +2,11 @@ from flask import Flask, jsonify
 from flask_restful import Resource, Api, reqparse, marshal, marshal_with, fields, abort
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
 db = SQLAlchemy(app)
+CORS(app)
 api = Api(app)
 app.secret_key = "eh4309jd"
 

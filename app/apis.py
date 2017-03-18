@@ -7,7 +7,7 @@ parser.add_argument('email', type=str)
 parser.add_argument('phone', type=str)
 
 contact_fields = {
-    'id': fields.String,
+    'id': fields.Integer,
     'name': fields.String,
     'email': fields.String,
     'phone': fields.String
@@ -28,9 +28,12 @@ class ContactResource(Resource):
         contact = models.Contact.query.get(contact_id)
         if not contact:
             abort(404, message="Contact {} doesn't exist".format(contact_id))
-        contact.name = args.name
-        contact.email = args.email
-        contact.phone = args.phone
+        if args.name:
+            contact.name = args.name
+        if args.email:
+            contact.email = args.email
+        if args.phone:
+            contact.phone = args.phone
         db.session.commit()
         return marshal(contact, contact_fields), 201
 
@@ -58,5 +61,5 @@ class ContactListResource(Resource):
         db.session.commit()
         return marshal(contact, contact_fields), 201
                 
-api.add_resource(ContactListResource, '/contacts')
-api.add_resource(ContactResource, '/contacts/<int:contact_id>')
+api.add_resource(ContactListResource, '/api/contacts')
+api.add_resource(ContactResource, '/api/contacts/<int:contact_id>')
